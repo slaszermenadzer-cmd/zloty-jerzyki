@@ -29,8 +29,6 @@ main { max-width:1000px; margin:0 auto; padding:20px; position:relative; }
 button { display:block; margin:50px auto; padding:18px 46px; font-size:1.1rem; border-radius:999px; border:none; cursor:pointer; color:#1b102b; background:linear-gradient(135deg, #f3e6c8, #d8caa8); letter-spacing:1px; box-shadow:0 20px 40px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
 button:hover { transform: scale(1.06); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
 footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
-
-/* Ekran podziękowania */
 .thankyou {
   display:none;
   position:fixed;
@@ -110,7 +108,7 @@ footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-si
   <button type="submit">ODDAJ GŁOS</button>
 </form>
 
-<iframe name="hidden_iframe" style="display:none;" onload="submitted()"></iframe>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
 </main>
 
 <footer>
@@ -120,15 +118,22 @@ footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-si
 <div class="thankyou" id="thankyou">Dziękujemy za oddanie głosów!</div>
 
 <script>
-function submitted() {
-  // Pokaż ekran podziękowania tylko jeśli formularz jest wysłany
-  const thankyou = document.getElementById('thankyou');
-  const form = document.getElementById('voteForm');
-  if (form.dataset.submitted) return; // tylko raz
-  form.dataset.submitted = "true";
-  form.style.display = "none";
-  thankyou.style.display = "flex";
-}
+const form = document.getElementById('voteForm');
+const thankyou = document.getElementById('thankyou');
+
+form.addEventListener('submit', function(e) {
+  // ustawiamy flage, że formularz został wysłany
+  form.dataset.submitting = "true";
+});
+
+// Funkcja sprawdzająca iframe tylko po wysłaniu formularza
+document.querySelector('iframe[name="hidden_iframe"]').addEventListener('load', function() {
+  if (form.dataset.submitting) {
+    form.style.display = 'none';
+    thankyou.style.display = 'flex';
+    form.dataset.submitting = ""; // resetujemy flagę
+  }
+});
 </script>
 
 </body>
