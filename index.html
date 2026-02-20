@@ -19,7 +19,7 @@
     header { padding:80px 20px 50px; text-align:center; }
     header h1 { font-size:3.2rem; margin:0; color:var(--cream); letter-spacing:2px; }
     header span { display:block; margin-top:12px; font-size:0.9rem; letter-spacing:3px; color:var(--cream-muted); }
-    main { max-width:1000px; margin:0 auto; padding:20px; }
+    main { max-width:1000px; margin:0 auto; padding:20px; position:relative; }
     .category { background: linear-gradient(160deg, #2a0f45, #1b102b); border-radius:22px; padding:28px; margin-bottom:35px; box-shadow:0 25px 60px rgba(0,0,0,0.6); }
     .category h2 { margin-top:0; color:var(--cream); font-size:1.7rem; letter-spacing:1px; }
     .option { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer; transition: background 0.25s, transform 0.15s; color: var(--cream-muted); }
@@ -30,6 +30,24 @@
     footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
     .text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
     .text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
+
+    /* ===== Overlay po głosowaniu ===== */
+    #thankYouOverlay {
+      display: none;
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: radial-gradient(circle at top, #4b1d78, #1b102b 65%);
+      color: var(--cream);
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      padding-top: 40vh;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -102,9 +120,25 @@
   </form>
 </main>
 
+<!-- Overlay po oddaniu głosu -->
+<div id="thankYouOverlay">Dziękujemy za oddanie głosów!</div>
+
 <footer>
   © Złote Jerzyki • 1slaszerek
 </footer>
+
+<script>
+  const form = document.getElementById("voteForm");
+  const overlay = document.getElementById("thankYouOverlay");
+
+  form.addEventListener("submit", function(e) {
+    // Pokaż overlay
+    overlay.style.display = "block";
+
+    // Ukryj formularz
+    form.style.display = "none";
+  });
+</script>
 
 </body>
 </html>
