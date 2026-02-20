@@ -14,12 +14,10 @@
 }
 * { box-sizing:border-box; }
 body { margin:0; font-family:"Segoe UI", system-ui, sans-serif; background: radial-gradient(circle at top, #4b1d78, #1b102b 65%); color: var(--cream); }
-.top-bar { background: var(--cream); color:#1b102b; font-weight:600; text-align:center; padding:10px; letter-spacing:1px; font-size:0.9rem; position:relative; }
+.top-bar { background: var(--cream); color:#1b102b; font-weight:600; text-align:center; padding:10px; letter-spacing:1px; font-size:0.9rem; }
 header { padding:40px 20px 20px; text-align:center; }
 header h1 { font-size:3rem; margin:0; color:var(--cream); letter-spacing:2px; }
 header span { display:block; margin-top:8px; font-size:0.9rem; letter-spacing:3px; color:var(--cream-muted); }
-#loginBtn, #viewResultsBtn { position:absolute; top:8px; right:12px; background:var(--purple-light); color:var(--cream); border:none; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
-#loginBtn:hover, #viewResultsBtn:hover { background:var(--purple-dark); }
 main { max-width:1000px; margin:0 auto; padding:20px; }
 .category { background: linear-gradient(160deg, #2a0f45, #1b102b); border-radius:22px; padding:28px; margin-bottom:35px; box-shadow:0 25px 60px rgba(0,0,0,0.6); }
 .category h2 { margin-top:0; color:var(--cream); font-size:1.7rem; letter-spacing:1px; }
@@ -31,23 +29,13 @@ main { max-width:1000px; margin:0 auto; padding:20px; }
 button { display:block; margin:30px auto; padding:14px 40px; font-size:1.1rem; border-radius:999px; border:none; cursor:pointer; color:#1b102b; background:linear-gradient(135deg, #f3e6c8, #d8caa8); letter-spacing:1px; box-shadow:0 20px 40px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
 button:hover { transform: scale(1.06); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
 footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
-#loginModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000; }
-#loginModal .modal-content { background:var(--purple); padding:30px; border-radius:16px; display:flex; flex-direction:column; gap:10px; width:300px; }
-#loginModal input { width:100%; padding:8px; border-radius:6px; border:none; }
-#voteForm, #adminResults { display:none; }
-.thankyou { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: var(--purple); color: var(--cream); font-size:2rem; font-weight:600; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; z-index:1000; flex-direction:column; gap:20px; }
-.thankyou button { font-size:1rem; padding:10px 20px; }
-table { width:100%; border-collapse:collapse; }
-th, td { padding:8px; border:1px solid var(--cream-muted); text-align:left; }
+#loginForm, #voteForm, #adminResults { display:none; }
+.thankyou { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: var(--purple); color: var(--cream); font-size:2rem; font-weight:600; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; z-index:1000; }
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  OGLĄDAJ NA ŻYWO • ZŁOTE JERZYKI
-  <button id="loginBtn">Zaloguj</button>
-  <button id="viewResultsBtn" style="display:none;">Wyniki</button>
-</div>
+<div class="top-bar">OGLĄDAJ NA ŻYWO • ZŁOTE JERZYKI</div>
 
 <header>
   <h1>ZŁOTE JERZYKI 2026</h1>
@@ -55,18 +43,22 @@ th, td { padding:8px; border:1px solid var(--cream-muted); text-align:left; }
 </header>
 
 <main>
-  <!-- MODAL LOGOWANIA -->
-  <div id="loginModal">
-    <div class="modal-content">
+  <!-- LOGOWANIE -->
+  <form id="loginForm">
+    <div class="category">
       <h2>Logowanie / Rejestracja</h2>
-      <input type="text" id="nick" placeholder="Twój nick" required>
-      <input type="password" id="password" placeholder="Hasło" required>
-      <button id="loginSubmit">Zaloguj</button>
+      <div class="text-option">
+        <input type="text" id="nick" placeholder="Twój nick" required>
+      </div>
+      <div class="text-option">
+        <input type="password" id="password" placeholder="Hasło" required>
+      </div>
+      <button type="submit">Zaloguj / Zarejestruj</button>
     </div>
-  </div>
+  </form>
 
   <!-- FORMULARZ GŁOSOWANIA -->
-  <form id="voteForm">
+  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="hidden_iframe">
     <div class="category">
       <h2>Administrator Dekady</h2>
       <label class="option"><input type="radio" name="rok" value="Bober090" required> Bober090</label>
@@ -91,96 +83,63 @@ th, td { padding:8px; border:1px solid var(--cream-muted); text-align:left; }
       <h2>Najbardziej Pomocny Administrator</h2>
       <div class="text-option"><input type="text" name="pomocny" placeholder="Wpisz tutaj..." required></div>
     </div>
+    <input type="hidden" name="nickHidden" id="nickHidden">
     <button type="submit">ODDAJ GŁOS</button>
   </form>
 
-  <!-- SEKCA WYNIKÓW DLA SLASZEREK -->
   <div id="adminResults">
     <h2>Wyniki Głosowania</h2>
-    <table id="resultsTable">
-      <thead>
-        <tr>
-          <th>Nick</th><th>Administrator Dekady</th><th>Wtopa Roku</th><th>Rok 2025</th><th>Aktywny</th><th>Pomocny</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <p>Tu będą wyniki głosowania dla admina slaszerek (symulacja)</p>
   </div>
 
 </main>
 
 <footer>© Złote Jerzyki • 1slaszerek</footer>
 
-<div class="thankyou" id="thankyou">
-  Dziękujemy za oddanie głosów!
-  <button id="closeThankyou">Zamknij</button>
-</div>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+<div class="thankyou" id="thankyou">Dziękujemy za oddanie głosów!</div>
 
 <script>
-const loginBtn = document.getElementById('loginBtn');
-const loginModal = document.getElementById('loginModal');
-const loginSubmit = document.getElementById('loginSubmit');
+const loginForm = document.getElementById('loginForm');
 const voteForm = document.getElementById('voteForm');
 const thankyou = document.getElementById('thankyou');
-const closeThankyou = document.getElementById('closeThankyou');
-const viewResultsBtn = document.getElementById('viewResultsBtn');
 const adminResults = document.getElementById('adminResults');
-const resultsTableBody = document.querySelector('#resultsTable tbody');
 
-let currentUser = '';
+loginForm.style.display = 'block';
 
-// otwarcie modala
-loginBtn.addEventListener('click',()=>loginModal.style.display='flex');
-
-// logowanie/rejestracja
-loginSubmit.addEventListener('click',()=>{
+loginForm.addEventListener('submit', function(e){
+  e.preventDefault();
   const nick = document.getElementById('nick').value.trim();
   const password = document.getElementById('password').value.trim();
-  if(!nick || !password) return alert('Wypełnij oba pola');
-  currentUser = nick;
-  loginModal.style.display='none';
-  voteForm.style.display='block';
-  if(nick.toLowerCase() === 'slaszerek'){
-    viewResultsBtn.style.display='inline-block';
+
+  if(nick && password){
+    document.getElementById('nickHidden').value = nick; // dodajemy nick do formularza
+    loginForm.style.display = 'none';
+    voteForm.style.display = 'block';
+    if(nick.toLowerCase() === 'slaszerek'){
+      adminResults.style.display = 'block';
+    }
   }
 });
 
-// zamknięcie okna podziękowania
-closeThankyou.addEventListener('click',()=>thankyou.style.display='none');
-
-// zapis i wyświetlenie głosów w localStorage
-voteForm.addEventListener('submit',function(e){
+// Głosowanie
+voteForm.addEventListener('submit', function(e){
   e.preventDefault();
-  const formData = new FormData(voteForm);
-  const vote = {
-    nick: currentUser,
-    rok: formData.get('rok'),
-    suchar: formData.get('suchar'),
-    kreatywny: formData.get('kreatywny'),
-    aktywny: formData.get('aktywny'),
-    pomocny: formData.get('pomocny')
-  };
+  const data = new FormData(voteForm);
 
-  // pobranie istniejących głosów
-  let votes = JSON.parse(localStorage.getItem('votes')||'[]');
-  votes.push(vote);
-  localStorage.setItem('votes',JSON.stringify(votes));
-
-  voteForm.style.display='none';
-  thankyou.style.display='flex';
-  voteForm.reset();
-});
-
-// przycisk wyświetlania wyników dla slaszereka
-viewResultsBtn.addEventListener('click',()=>{
-  const votes = JSON.parse(localStorage.getItem('votes')||'[]');
-  resultsTableBody.innerHTML = '';
-  votes.forEach(v=>{
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${v.nick}</td><td>${v.rok}</td><td>${v.suchar}</td><td>${v.kreatywny}</td><td>${v.aktywny}</td><td>${v.pomocny}</td>`;
-    resultsTableBody.appendChild(row);
+  fetch(voteForm.action, {
+    method:'POST',
+    body:data,
+    headers:{'Accept':'application/json'}
+  }).then(res=>{
+    if(res.ok){
+      voteForm.style.display='none';
+      thankyou.style.display='flex';
+    } else {
+      alert('Coś poszło nie tak, spróbuj później.');
+    }
   });
-  adminResults.style.display='block';
 });
 </script>
 
