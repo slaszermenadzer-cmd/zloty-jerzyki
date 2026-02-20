@@ -58,8 +58,9 @@
 </header>
 
 <main>
-  <form id="voteForm">
-    <!-- Pole Nick -->
+  <!-- Standardowy POST do Formspree -->
+  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="hidden_iframe">
+
     <div class="category">
       <h2>Twój nick</h2>
       <div class="text-option">
@@ -67,7 +68,6 @@
       </div>
     </div>
 
-    <!-- Administrator Dekady -->
     <div class="category">
       <h2>Administrator Dekady</h2>
       <label class="option"><input type="radio" name="rok" value="Bober090" required /> Bober090</label>
@@ -80,7 +80,6 @@
       <label class="option"><input type="radio" name="rok" value="slaszerek" /> slaszerek</label>
     </div>
 
-    <!-- Wtopa Roku -->
     <div class="category">
       <h2>Wtopa Roku</h2>
       <label class="option"><input type="radio" name="suchar" value="Bober090 - ???" required /> Bober090 - ???</label>
@@ -88,7 +87,6 @@
       <label class="option"><input type="radio" name="suchar" value="???" /> ???</label>
     </div>
 
-    <!-- Administrator Roku 2025 -->
     <div class="category">
       <h2>Administrator Roku 2025</h2>
       <div class="text-option">
@@ -96,7 +94,6 @@
       </div>
     </div>
 
-    <!-- Najbardziej Aktywny Administrator -->
     <div class="category">
       <h2>Najbardziej Aktywny Administrator</h2>
       <div class="text-option">
@@ -104,7 +101,6 @@
       </div>
     </div>
 
-    <!-- Najbardziej Pomocny Administrator -->
     <div class="category">
       <h2>Najbardziej Pomocny Administrator</h2>
       <div class="text-option">
@@ -114,6 +110,9 @@
 
     <button type="submit">ODDAJ GŁOS</button>
   </form>
+
+  <!-- Ukryta ramka, żeby Formspree wysłało maila bez przeładowania -->
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
 </main>
 
 <footer>
@@ -128,20 +127,8 @@
   const form = document.getElementById("voteForm");
   const thankyou = document.getElementById("thankyou");
 
-  form.addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    // Pobierz dane formularza
-    const data = new FormData(form);
-
-    // Wyślij do Formspree w tle
-    const response = await fetch("https://formspree.io/f/maqddaow", {
-      method: "POST",
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    // Pokaż ekran podziękowania
+  // Pokaż ekran podziękowania po wysłaniu formularza
+  form.addEventListener("submit", function() {
     form.style.display = "none";
     thankyou.style.display = "flex";
   });
