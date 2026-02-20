@@ -31,7 +31,7 @@
     .text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
     .text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
 
-    /* ===== Overlay po głosowaniu ===== */
+    /* Overlay po głosowaniu */
     #thankYouOverlay {
       display: none;
       position: fixed;
@@ -46,7 +46,6 @@
       text-align: center;
       padding-top: 40vh;
       z-index: 9999;
-      transition: opacity 0.3s ease;
     }
   </style>
 </head>
@@ -60,8 +59,7 @@
 </header>
 
 <main>
-  <!-- Formularz wysyłający do Formspree -->
-  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="_blank">
+  <form id="voteForm">
 
     <!-- Pole Nick -->
     <div class="category">
@@ -132,11 +130,13 @@
   const overlay = document.getElementById("thankYouOverlay");
 
   form.addEventListener("submit", function(e) {
-    // Pokaż overlay
-    overlay.style.display = "block";
+    e.preventDefault(); // Nie wysyłamy formularza
 
     // Ukryj formularz
     form.style.display = "none";
+
+    // Pokaż overlay
+    overlay.style.display = "block";
   });
 </script>
 
