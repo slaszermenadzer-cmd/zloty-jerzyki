@@ -1,140 +1,110 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Złote Jerzyki – Oficjalne Głosowanie</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-:root {
-  --purple-dark: #1b102b;
-  --purple: #2a0f45;
-  --purple-light: #4b1d78;
-  --cream: #f3e6c8;
-  --cream-muted: #d8caa8;
-}
-* { box-sizing:border-box; }
-body { margin:0; font-family:"Segoe UI", system-ui, sans-serif; background: radial-gradient(circle at top, #4b1d78, #1b102b 65%); color: var(--cream); }
-.top-bar { background: var(--cream); color:#1b102b; font-weight:600; text-align:center; padding:10px; letter-spacing:1px; font-size:0.9rem; }
-header { padding:80px 20px 50px; text-align:center; }
-header h1 { font-size:3.2rem; margin:0; color:var(--cream); letter-spacing:2px; }
-header span { display:block; margin-top:12px; font-size:0.9rem; letter-spacing:3px; color:var(--cream-muted); }
-main { max-width:1000px; margin:0 auto; padding:20px; position:relative; }
-.category { background: linear-gradient(160deg, #2a0f45, #1b102b); border-radius:22px; padding:28px; margin-bottom:35px; box-shadow:0 25px 60px rgba(0,0,0,0.6); }
-.category h2 { margin-top:0; color:var(--cream); font-size:1.7rem; letter-spacing:1px; }
-.option { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer; transition: background 0.25s, transform 0.15s; color: var(--cream-muted); }
-.option:hover { background: rgba(243,230,200,0.08); transform: translateX(6px); color: var(--cream); }
-.option input { transform: scale(1.2); accent-color: var(--cream); }
-.text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
-.text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
-button { display:block; margin:50px auto; padding:18px 46px; font-size:1.1rem; border-radius:999px; border:none; cursor:pointer; color:#1b102b; background:linear-gradient(135deg, #f3e6c8, #d8caa8); letter-spacing:1px; box-shadow:0 20px 40px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
-button:hover { transform: scale(1.06); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
-footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
-.thankyou {
-  display:none;
-  position:fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: var(--purple);
-  color: var(--cream);
-  font-size:2rem;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-  z-index:1000;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Złote Jerzyki – Oficjalne Głosowanie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --purple-dark: #1b102b;
+      --purple: #2a0f45;
+      --purple-light: #4b1d78;
+      --cream: #f3e6c8;
+      --cream-muted: #d8caa8;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:"Segoe UI", system-ui, sans-serif; background: radial-gradient(circle at top, #4b1d78, #1b102b 65%); color: var(--cream); }
+    .top-bar { background: var(--cream); color:#1b102b; font-weight:600; text-align:center; padding:10px; letter-spacing:1px; font-size:0.9rem; }
+    header { padding:80px 20px 50px; text-align:center; }
+    header h1 { font-size:3.2rem; margin:0; color:var(--cream); letter-spacing:2px; }
+    header span { display:block; margin-top:12px; font-size:0.9rem; letter-spacing:3px; color:var(--cream-muted); }
+    main { max-width:1000px; margin:0 auto; padding:20px; }
+    .category { background: linear-gradient(160deg, #2a0f45, #1b102b); border-radius:22px; padding:28px; margin-bottom:35px; box-shadow:0 25px 60px rgba(0,0,0,0.6); }
+    .category h2 { margin-top:0; color:var(--cream); font-size:1.7rem; letter-spacing:1px; }
+    .option { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer; transition: background 0.25s, transform 0.15s; color: var(--cream-muted); }
+    .option:hover { background: rgba(243,230,200,0.08); transform: translateX(6px); color: var(--cream); }
+    .option input { transform: scale(1.2); accent-color: var(--cream); }
+    button { display:block; margin:50px auto; padding:18px 46px; font-size:1.1rem; border-radius:999px; border:none; cursor:pointer; color:#1b102b; background:linear-gradient(135deg, #f3e6c8, #d8caa8); letter-spacing:1px; box-shadow:0 20px 40px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
+    button:hover { transform: scale(1.06); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
+    footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
+    .text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
+    .text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
+  </style>
 </head>
 <body>
 
 <div class="top-bar">OGLĄDAJ NA ŻYWO • ZŁOTE JERZYKI</div>
 
 <header>
-  <h1>Złote Jerzyki 2026</h1>
+  <h1>ZŁOTE Jerzyki 2026</h1>
   <span>I OFICJALNA EDYCJA GŁOSOWANIA</span>
 </header>
 
 <main>
-<form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="hidden_iframe">
+  <!-- Formularz wysyłający do Formspree -->
+  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="_blank">
 
-  <div class="category">
-    <h2>Twój nick</h2>
-    <div class="text-option">
-      <input type="text" name="nick" placeholder="Wpisz swój nick..." required>
+    <!-- Pole Nick -->
+    <div class="category">
+      <h2>Twój nick</h2>
+      <div class="text-option">
+        <input type="text" name="nick" placeholder="Wpisz swój nick..." required>
+      </div>
     </div>
-  </div>
 
-  <div class="category">
-    <h2>Administrator Dekady</h2>
-    <label class="option"><input type="radio" name="rok" value="Bober090" required /> Bober090</label>
-    <label class="option"><input type="radio" name="rok" value="Feszynek" /> Feszynek</label>
-    <label class="option"><input type="radio" name="rok" value="Snaed" /> Snaed</label>
-    <label class="option"><input type="radio" name="rok" value="xBonisek" /> xBonisek</label>
-    <label class="option"><input type="radio" name="rok" value="jaruso99" /> jaruso99</label>
-    <label class="option"><input type="radio" name="rok" value="domuulaq" /> domuulaq</label>
-    <label class="option"><input type="radio" name="rok" value="sexialeksander69" /> sexialeksander69</label>
-    <label class="option"><input type="radio" name="rok" value="slaszerek" /> slaszerek</label>
-  </div>
-
-  <div class="category">
-    <h2>Wtopa Roku</h2>
-    <label class="option"><input type="radio" name="suchar" value="Bober090 - ???" required /> Bober090 - ???</label>
-    <label class="option"><input type="radio" name="suchar" value="???" /> ???</label>
-    <label class="option"><input type="radio" name="suchar" value="???" /> ???</label>
-  </div>
-
-  <div class="category">
-    <h2>Administrator Roku 2025</h2>
-    <div class="text-option">
-      <input type="text" name="kreatywny" placeholder="Wpisz tutaj..." required>
+    <!-- Administrator Dekady -->
+    <div class="category">
+      <h2>Administrator Dekady</h2>
+      <label class="option"><input type="radio" name="rok" value="Bober090" required /> Bober090</label>
+      <label class="option"><input type="radio" name="rok" value="Feszynek" /> Feszynek</label>
+      <label class="option"><input type="radio" name="rok" value="Snaed" /> Snaed</label>
+      <label class="option"><input type="radio" name="rok" value="xBonisek" /> xBonisek</label>
+      <label class="option"><input type="radio" name="rok" value="jaruso99" /> jaruso99</label>
+      <label class="option"><input type="radio" name="rok" value="domuulaq" /> domuulaq</label>
+      <label class="option"><input type="radio" name="rok" value="sexialeksander69" /> sexialeksander69</label>
+      <label class="option"><input type="radio" name="rok" value="slaszerek" /> slaszerek</label>
     </div>
-  </div>
 
-  <div class="category">
-    <h2>Najbardziej Aktywny Administrator</h2>
-    <div class="text-option">
-      <input type="text" name="aktywny" placeholder="Wpisz tutaj..." required>
+    <!-- Wtopa Roku -->
+    <div class="category">
+      <h2>Wtopa Roku</h2>
+      <label class="option"><input type="radio" name="suchar" value="Bober090 - ???" required /> Bober090 - ???</label>
+      <label class="option"><input type="radio" name="suchar" value="???" /> ???</label>
+      <label class="option"><input type="radio" name="suchar" value="???" /> ???</label>
     </div>
-  </div>
 
-  <div class="category">
-    <h2>Najbardziej Pomocny Administrator</h2>
-    <div class="text-option">
-      <input type="text" name="pomocny" placeholder="Wpisz tutaj..." required>
+    <!-- Administrator Roku 2025 -->
+    <div class="category">
+      <h2>Administrator Roku 2025</h2>
+      <div class="text-option">
+        <input type="text" name="kreatywny" placeholder="Wpisz tutaj..." required>
+      </div>
     </div>
-  </div>
 
-  <button type="submit">ODDAJ GŁOS</button>
-</form>
+    <!-- Najbardziej Aktywny Administrator -->
+    <div class="category">
+      <h2>Najbardziej Aktywny Administrator</h2>
+      <div class="text-option">
+        <input type="text" name="aktywny" placeholder="Wpisz tutaj..." required>
+      </div>
+    </div>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
+    <!-- Najbardziej Pomocny Administrator -->
+    <div class="category">
+      <h2>Najbardziej Pomocny Administrator</h2>
+      <div class="text-option">
+        <input type="text" name="pomocny" placeholder="Wpisz tutaj..." required>
+      </div>
+    </div>
+
+    <button type="submit">ODDAJ GŁOS</button>
+  </form>
 </main>
 
 <footer>
   © Złote Jerzyki • 1slaszerek
 </footer>
-
-<div class="thankyou" id="thankyou">Dziękujemy za oddanie głosów!</div>
-
-<script>
-const form = document.getElementById('voteForm');
-const thankyou = document.getElementById('thankyou');
-
-form.addEventListener('submit', function(e) {
-  // ustawiamy flage, że formularz został wysłany
-  form.dataset.submitting = "true";
-});
-
-// Funkcja sprawdzająca iframe tylko po wysłaniu formularza
-document.querySelector('iframe[name="hidden_iframe"]').addEventListener('load', function() {
-  if (form.dataset.submitting) {
-    form.style.display = 'none';
-    thankyou.style.display = 'flex';
-    form.dataset.submitting = ""; // resetujemy flagę
-  }
-});
-</script>
 
 </body>
 </html>
