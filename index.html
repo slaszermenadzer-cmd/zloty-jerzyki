@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Złote Jerzyki – Oficjalne Głosowanie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <style>
     :root {
       --purple-dark: #1b102b;
@@ -13,7 +12,7 @@
       --cream: #f3e6c8;
       --cream-muted: #d8caa8;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing:border-box; }
     body { margin:0; font-family:"Segoe UI", system-ui, sans-serif; background: radial-gradient(circle at top, #4b1d78, #1b102b 65%); color: var(--cream); }
     .top-bar { background: var(--cream); color:#1b102b; font-weight:600; text-align:center; padding:10px; letter-spacing:1px; font-size:0.9rem; }
     header { padding:80px 20px 50px; text-align:center; }
@@ -25,27 +24,27 @@
     .option { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer; transition: background 0.25s, transform 0.15s; color: var(--cream-muted); }
     .option:hover { background: rgba(243,230,200,0.08); transform: translateX(6px); color: var(--cream); }
     .option input { transform: scale(1.2); accent-color: var(--cream); }
+    .text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
+    .text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
     button { display:block; margin:50px auto; padding:18px 46px; font-size:1.1rem; border-radius:999px; border:none; cursor:pointer; color:#1b102b; background:linear-gradient(135deg, #f3e6c8, #d8caa8); letter-spacing:1px; box-shadow:0 20px 40px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
     button:hover { transform: scale(1.06); box-shadow: 0 30px 70px rgba(0,0,0,0.7); }
     footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-size:0.85rem; letter-spacing:1px; }
-    .text-option { display:flex; align-items:center; gap:10px; margin-top:10px; }
-    .text-option input { width:250px; padding:6px 10px; border-radius:8px; border:none; font-size:0.95rem; }
 
-    /* Overlay po głosowaniu */
-    #thankYouOverlay {
-      display: none;
-      position: fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background: radial-gradient(circle at top, #4b1d78, #1b102b 65%);
+    /* Ekran podziękowania */
+    .thankyou {
+      display:none;
+      position:fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: var(--purple);
       color: var(--cream);
-      font-size: 2rem;
-      font-weight: 600;
-      text-align: center;
-      padding-top: 40vh;
-      z-index: 9999;
+      font-size:2rem;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
+      z-index:1000;
     }
   </style>
 </head>
@@ -54,13 +53,12 @@
 <div class="top-bar">OGLĄDAJ NA ŻYWO • ZŁOTE JERZYKI</div>
 
 <header>
-  <h1>ZŁOTE Jerzyki 2026</h1>
+  <h1>Złote Jerzyki 2026</h1>
   <span>I OFICJALNA EDYCJA GŁOSOWANIA</span>
 </header>
 
 <main>
   <form id="voteForm">
-
     <!-- Pole Nick -->
     <div class="category">
       <h2>Twój nick</h2>
@@ -118,25 +116,34 @@
   </form>
 </main>
 
-<!-- Overlay po oddaniu głosu -->
-<div id="thankYouOverlay">Dziękujemy za oddanie głosów!</div>
-
 <footer>
   © Złote Jerzyki • 1slaszerek
 </footer>
 
+<div class="thankyou" id="thankyou">
+  Dziękujemy za oddanie głosów!
+</div>
+
 <script>
   const form = document.getElementById("voteForm");
-  const overlay = document.getElementById("thankYouOverlay");
+  const thankyou = document.getElementById("thankyou");
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault(); // Nie wysyłamy formularza
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-    // Ukryj formularz
+    // Pobierz dane formularza
+    const data = new FormData(form);
+
+    // Wyślij do Formspree w tle
+    const response = await fetch("https://formspree.io/f/maqddaow", {
+      method: "POST",
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    // Pokaż ekran podziękowania
     form.style.display = "none";
-
-    // Pokaż overlay
-    overlay.style.display = "block";
+    thankyou.style.display = "flex";
   });
 </script>
 
