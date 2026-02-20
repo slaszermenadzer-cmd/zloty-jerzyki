@@ -22,7 +22,7 @@ header span { display:block; margin-top:8px; font-size:0.9rem; letter-spacing:3p
 #loginBtn:hover, #viewResultsBtn:hover { background:var(--purple-dark); }
 main { max-width:1000px; margin:0 auto; padding:20px; }
 .category { background: linear-gradient(160deg, #2a0f45, #1b102b); border-radius:22px; padding:28px; margin-bottom:35px; box-shadow:0 25px 60px rgba(0,0,0,0.6); }
-.category h2 { margin-top:0; color:var(--cream); font-size:1.7rem; letter-spacing:1px; }
+.category h2 { margin-top:0; color: var(--cream); font-size:1.7rem; letter-spacing:1px; }
 .option { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; cursor:pointer; transition: background 0.25s, transform 0.15s; color: var(--cream-muted); }
 .option:hover { background: rgba(243,230,200,0.08); transform: translateX(6px); color: var(--cream); }
 .option input { transform: scale(1.2); accent-color: var(--cream); }
@@ -39,6 +39,8 @@ footer { text-align:center; padding:50px 20px; color:var(--cream-muted); font-si
 .thankyou button { font-size:1rem; padding:10px 20px; }
 table { width:100%; border-collapse:collapse; }
 th, td { padding:8px; border:1px solid var(--cream-muted); text-align:left; }
+#backVoteBtn { display:none; margin-top:20px; background:var(--cream); color:#1b102b; font-weight:600; border-radius:8px; }
+#backVoteBtn:hover { background:var(--cream-muted); }
 </style>
 </head>
 <body>
@@ -105,6 +107,7 @@ th, td { padding:8px; border:1px solid var(--cream-muted); text-align:left; }
       </thead>
       <tbody></tbody>
     </table>
+    <button id="backVoteBtn">Powrót do głosowania</button>
   </div>
 
 </main>
@@ -126,6 +129,7 @@ const closeThankyou = document.getElementById('closeThankyou');
 const viewResultsBtn = document.getElementById('viewResultsBtn');
 const adminResults = document.getElementById('adminResults');
 const resultsTableBody = document.querySelector('#resultsTable tbody');
+const backVoteBtn = document.getElementById('backVoteBtn');
 
 let currentUser = '';
 
@@ -181,6 +185,15 @@ viewResultsBtn.addEventListener('click',()=>{
     resultsTableBody.appendChild(row);
   });
   adminResults.style.display='block';
+  voteForm.style.display='none';
+  backVoteBtn.style.display='inline-block';
+});
+
+// przycisk powrotu do głosowania (tylko dla slaszereka)
+backVoteBtn.addEventListener('click',()=>{
+  adminResults.style.display='none';
+  voteForm.style.display='block';
+  backVoteBtn.style.display='none';
 });
 </script>
 
