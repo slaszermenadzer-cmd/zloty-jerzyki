@@ -43,7 +43,7 @@
 
 <main>
   <!-- Formularz wysyłający do Formspree -->
-  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST">
+  <form id="voteForm" action="https://formspree.io/f/maqddaow" method="POST" target="_blank">
 
     <!-- Pole Nick -->
     <div class="category">
@@ -105,27 +105,6 @@
 <footer>
   © Złote Jerzyki • 1slaszerek
 </footer>
-
-<script>
-  const form = document.getElementById("voteForm");
-  form.addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const data = new FormData(form);
-
-    const response = await fetch(form.action, {
-      method: "POST",
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok) {
-      alert("Dzięki za oddanie głosu! 🏆");
-      form.reset();
-    } else {
-      alert("Coś poszło nie tak, spróbuj później.");
-    }
-  });
-</script>
 
 </body>
 </html>
